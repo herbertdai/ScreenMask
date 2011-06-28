@@ -5,6 +5,7 @@
  */
 package com.howfun.android.screenmask;
 
+import com.howfun.android.screenmask.mask.BugMask;
 import com.howfun.android.screenmask.mask.FruitMask;
 import com.howfun.android.screenmask.mask.CoinMask;
 import com.howfun.android.screenmask.mask.Mask;
@@ -71,7 +72,8 @@ public class MainPage extends Activity {
                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                   int x = (int) event.getX();
                   int y = (int) event.getY();
-                  Mask mask = new CoinMask(mContext, x, y);
+//                  Mask mask = new CoinMask(mContext, x, y);
+                  Mask mask = new BugMask(mContext, x, y);
                   mScreenManager.add(mask);
                }
                return false;

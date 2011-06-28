@@ -6,11 +6,13 @@
 package com.howfun.android.screenmask.mask;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 
-public class Mask extends View {
+public class Mask extends ImageView {
 
    protected int mCenterX;
    protected int mCenterY;
@@ -56,5 +58,12 @@ public class Mask extends View {
       int bottom = mCenterY + mRectHeight / 2;
       mRect = new Rect(left, top, right, bottom);
    }
+
+   protected void onDraw(Canvas canvas) {
+      super.onDraw(canvas); 
+      // TODO Auto-generated method stub
+      
+   }
+
    
 }
