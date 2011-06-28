@@ -1,3 +1,8 @@
+/*
+ * Mask, base class to generate sub-mask classes.
+ * 
+ * HOWFUN Studio
+ */
 package com.howfun.android.screenmask;
 
 import android.app.Activity;
