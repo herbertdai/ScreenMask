@@ -34,10 +34,10 @@ public class FruitMask extends Mask {
    private void init(int x, int y) {
       mCenterX = x;
       mCenterY = y;
-      mRectWidth = 72;
-      mRectHeight = 72;
+      mRectWidth = 100;
+      mRectHeight = 100;
       setRect();
-      setBackgroundResource(R.drawable.orange);
+      setBackgroundResource(R.drawable.orange_slice);
       setClickable(false);
    }
 }

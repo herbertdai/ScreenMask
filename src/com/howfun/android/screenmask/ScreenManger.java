@@ -32,7 +32,7 @@ public class ScreenManger {
     * 
     * @return true success false if fail
     */
-   public boolean Add(Mask mask) {
+   public boolean add(Mask mask) {
 
       if (mask == null) {
          Utils.log(TAG, "mask is null,return");
@@ -48,7 +48,7 @@ public class ScreenManger {
    }
 
    public void remove(Mask mask) {
-
+      
    }
 
    public void remove(int maskId) {
