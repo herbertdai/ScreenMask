@@ -2,4 +2,6 @@
 <resources>
     <string name="hello">Hello, How Fun buddies!</string>
     <string name="app_name">ScreenMask</string>
+    <string name="fruit_mask">Fruit</string>
+    <string name="coin_mask">Coin</string>
 </resources>

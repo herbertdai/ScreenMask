@@ -57,6 +57,8 @@ public class ScreenManger {
 
    public void removeAll() {
 
+	   mScreenView.removeAllViews();
+	   mMasks.clear();
    }
 
    /*
