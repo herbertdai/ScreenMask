@@ -13,22 +13,30 @@ import com.howfun.android.screenmask.mask.Mask;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
+
+import com.howfun.android.screenmask.mask.CoinMask;
+import com.howfun.android.screenmask.mask.FruitMask;
+import com.howfun.android.screenmask.mask.Mask;
 
 public class MainPage extends Activity {
    /** Called when the activity is first created. */
 
-   public static final String TAG = "ScreenMask";
+   public static final String TAG = "MainPage";
+   
+   private static final int NO_MASK = -1;
 
-   Button mBtn4Test = null;
    ScreenView mScreenView = null;
 
-   Context mContext = null;
+   private int mMaskId = NO_MASK;
+   private Context mContext = null;
+   private Sound mSound = null;
    ScreenManger mScreenManager = null;
 
    @Override
@@ -44,26 +52,16 @@ public class MainPage extends Activity {
 
    private void init() {
       mContext = this;
+      mSound = new Sound(mContext);
       mScreenManager = new ScreenManger(mContext);
+      
    }
 
    private void findViews() {
-      mBtn4Test = (Button) findViewById(R.id.button4test);
       mScreenView = (ScreenView) findViewById(R.id.screen_view);
    }
 
    private void setupListeners() {
-      if (mBtn4Test != null) {
-         mBtn4Test.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-               Utils.log(TAG, "button 4 test clicked");
-               // TODO gen a test mask
-            }
-         });
-      }
-
       if (mScreenView != null) {
          mScreenView.setOnTouchListener(new OnTouchListener() {
 
@@ -72,14 +70,71 @@ public class MainPage extends Activity {
                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                   int x = (int) event.getX();
                   int y = (int) event.getY();
-//                  Mask mask = new CoinMask(mContext, x, y);
-                  Mask mask = new BugMask(mContext, x, y);
-                  mScreenManager.add(mask);
+                  addMask(x, y);
                }
                return false;
             }
          });
       }
+   }
+   
+   private void addMask(int x,int y){
+	   Mask mask = null;
+	   switch(mMaskId){
+	   case R.id.fruit_mask:
+		   mask = new FruitMask(mContext, x,y);
+		   mScreenManager.add(mask);
+		   break;
+	   case R.id.coin_mask:
+		   mask = new CoinMask(mContext, x,y);
+		   mSound.play(R.raw.coin1);
+		   mScreenManager.add(mask);
+		   break;
+	   case R.id.bug_mask:
+		   mask = new BugMask(mContext, x,y);
+		   mScreenManager.add(mask);
+		   break;
+	   case NO_MASK:
+		   Utils.log(TAG, "no mask selected");
+		   break;
+	   }
+   }
+   
+   @Override
+   public boolean onCreateOptionsMenu(Menu menu){
+	   MenuInflater inflater = getMenuInflater();
+	   inflater.inflate(R.menu.options, menu);
+	   return super.onCreateOptionsMenu(menu);
+   }
+   
+   @Override
+   public boolean onOptionsItemSelected(MenuItem item){
+	   super.onOptionsItemSelected(item);
+	   switch(item.getItemId()){
+	   case R.id.fruit_mask:
+		   mMaskId = R.id.fruit_mask;
+//		   mScreenManager.removeAll();
+		   break;
+	   case R.id.coin_mask:
+		   mMaskId = R.id.coin_mask;
+//		   mScreenManager.removeAll();
+		   break;
+	   case R.id.bug_mask:
+		   mMaskId = R.id.bug_mask;
+//		   mScreenManager.removeAll();
+		   break;
+	   }
+	   return true;
+   }
+   
+   @Override
+   protected void onResume(){
+	   super.onResume();
+   }
+   
+   @Override
+   protected void onPause(){
+	   super.onPause();
    }
 
       
