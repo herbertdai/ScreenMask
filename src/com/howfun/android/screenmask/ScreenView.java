@@ -23,7 +23,6 @@ public class ScreenView extends ViewGroup {
    @Override
    protected void onLayout(boolean changed, int l, int t, int r, int b) {
       Utils.log(TAG, "screen view on layout");
-      // TODO Auto-generated method stub
 
    }
 
