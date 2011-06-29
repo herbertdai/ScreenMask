@@ -16,7 +16,7 @@ public class Utils {
 
    public static void log(String tag, String info) {
       if (ScreenMaskApplication.DEBUG) {
-         Log.d("Screen Mask>>>>>>>>>" + tag, "-------->" + info);
+         Log.e("Screen Mask>>>>>>>>>" + tag, "-------->" + info);
       }
    }
 
