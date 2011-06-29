@@ -12,9 +12,13 @@ import android.util.AttributeSet;
 
 public class FruitMask extends Mask {
 
+   private int mFruitIds[] = {R.drawable.orange_slice, R.drawable.apple, R.drawable.strawberry,
+         R.drawable.watermelon_slice};
+   
    public FruitMask(Context context, int x, int y) {
       super(context);
       init(x, y);
+      show();
    }
 
    public FruitMask(Context context, AttributeSet as) {
@@ -24,6 +28,8 @@ public class FruitMask extends Mask {
    @Override
    public void show() {
 
+      int random = (int)(Math.random() * mFruitIds.length);
+      setBackgroundResource(mFruitIds[random]);
    }
 
    @Override
@@ -37,7 +43,6 @@ public class FruitMask extends Mask {
       mRectWidth = 100;
       mRectHeight = 100;
       setRect();
-      setBackgroundResource(R.drawable.orange_slice);
       setClickable(false);
    }
 }
