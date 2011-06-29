@@ -5,4 +5,7 @@
     <string name="fruit_mask">Fruits</string>
     <string name="coin_mask">Coins</string>
     <string name="bug_mask">Bugs</string>
+    
+    <string name="help">Welcome to Screen Mask! Open menu to play more!</string>
+    <string name="exit">Exit</string>
 </resources>

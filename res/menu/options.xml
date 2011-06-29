@@ -9,5 +9,8 @@
         
     <item android:id="@+id/bug_mask"
         android:title="@string/bug_mask" />
+        
+    <item android:id="@+id/exit"
+    	android:title="@string/exit"	/>
 
 </menu>

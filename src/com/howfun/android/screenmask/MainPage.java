@@ -34,7 +34,7 @@ public class MainPage extends Activity {
 
    ScreenView mScreenView = null;
 
-   private int mMaskId = NO_MASK;
+   private int mMaskId = R.id.fruit_mask;
    private Context mContext = null;
    private Sound mSound = null;
    ScreenManger mScreenManager = null;
@@ -48,6 +48,7 @@ public class MainPage extends Activity {
       findViews();
       setupListeners();
       mScreenManager.setScreenView(mScreenView);
+      Utils.showMessageDlg(this, R.string.help);
    }
 
    private void init() {
@@ -113,15 +114,15 @@ public class MainPage extends Activity {
 	   switch(item.getItemId()){
 	   case R.id.fruit_mask:
 		   mMaskId = R.id.fruit_mask;
-//		   mScreenManager.removeAll();
 		   break;
 	   case R.id.coin_mask:
 		   mMaskId = R.id.coin_mask;
-//		   mScreenManager.removeAll();
 		   break;
 	   case R.id.bug_mask:
 		   mMaskId = R.id.bug_mask;
-//		   mScreenManager.removeAll();
+		   break;
+	   case R.id.exit:
+	      finish();
 		   break;
 	   }
 	   return true;
