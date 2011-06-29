@@ -22,10 +22,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnTouchListener;
 
-import com.howfun.android.screenmask.mask.CoinMask;
-import com.howfun.android.screenmask.mask.FruitMask;
-import com.howfun.android.screenmask.mask.Mask;
-
 public class MainPage extends Activity {
    /** Called when the activity is first created. */
 
@@ -53,6 +49,7 @@ public class MainPage extends Activity {
       findViews();
       setupListeners();
       mScreenManager.setScreenView(mScreenView);
+      Utils.showMessageDlg(this, R.string.help);
    }
 
    private void init() {

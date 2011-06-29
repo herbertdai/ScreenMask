@@ -10,11 +10,12 @@ import com.howfun.android.screenmask.R;
 import android.content.Context;
 
 public class FruitMask extends StaticMask {
-   
+
    public static final int RECT_WIDTH = 100;
    public static final int RECT_HEIGHT = 100;
-   
-   
+
+   private int mFruitIds[] = { R.drawable.orange_slice, R.drawable.apple,
+         R.drawable.strawberry, R.drawable.watermelon_slice };
 
    public FruitMask(Context context, int x, int y) {
       super(context);
@@ -27,7 +28,8 @@ public class FruitMask extends StaticMask {
       mRectWidth = RECT_WIDTH;
       mRectHeight = RECT_HEIGHT;
       setRect();
-      setBackgroundResource(R.drawable.orange_slice);
       setClickable(false);
+      int random = (int) (Math.random() * mFruitIds.length);
+      setBackgroundResource(mFruitIds[random]);
    }
 }
