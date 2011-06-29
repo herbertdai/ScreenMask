@@ -5,46 +5,32 @@
  */
 package com.howfun.android.screenmask.mask;
 
+import java.util.Random;
+
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.BitmapDrawable;
-import android.util.AttributeSet;
 
 import com.howfun.android.screenmask.R;
 import com.howfun.android.screenmask.Utils;
 
-public class BugMask extends Mask {
-   
+public class BugMask extends MovableMask {
+
    public static final String TAG = "BugMask";
 
-   private static final float MAX_ANGLE = 180.0f;
-   private static final float MIN_ANGLE = -180.0f;
-   private static final float[] ANGLES = { MAX_ANGLE, MIN_ANGLE };
+   public static final int RECT_WIDTH = 100;
+   public static final int RECT_HEIGHT = 100;
+
+   private static final Random RNG = new Random();
 
    private AnimationDrawable mAnimation;
-   
+
    public BugMask(Context context, int x, int y) {
       super(context);
       init(x, y);
-      show();
-   }
-
-   public BugMask(Context context, AttributeSet as) {
-      super(context, as);
    }
 
    @Override
-   public void show() {
-
-      this.setBackgroundResource(R.anim.bug_anim);
-      mAnimation = (AnimationDrawable) this.getBackground();
-   }
-   
-   @Override 
    protected void onDraw(Canvas canvas) {
       super.onDraw(canvas);
       if (mAnimation != null) {
@@ -52,19 +38,24 @@ public class BugMask extends Mask {
       }
    }
 
-   @Override
-   public void dismiss() {
-
-   }
-
-   private void init(int x, int y) {
+   protected void init(int x, int y) {
       mCenterX = x;
       mCenterY = y;
       mRectWidth = 100;
       mRectHeight = 100;
       setRect();
-      
+
+      int direction = Utils.DIRECTIONS[RNG.nextInt(Utils.DIRECTIONS.length)];
+      setDirection(direction);
+      Utils.log(TAG,"mask direction:"+direction);
+      int step = Utils.MOVE_STEPS[RNG.nextInt(Utils.MOVE_STEPS.length)];
+      Utils.log(TAG, "mask step:"+step);
+      setStep(step);
+
       setClickable(false);
+      mAnimation = (AnimationDrawable) this.getBackground();
+      this.setBackgroundResource(R.anim.bug_anim);
+      
    }
 
 }

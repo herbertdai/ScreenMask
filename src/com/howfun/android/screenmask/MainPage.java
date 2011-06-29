@@ -12,6 +12,7 @@ import com.howfun.android.screenmask.mask.Mask;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,12 +30,16 @@ public class MainPage extends Activity {
    /** Called when the activity is first created. */
 
    public static final String TAG = "MainPage";
-   
+
    private static final int NO_MASK = -1;
+   private static final int STATIC_MASK = 1;
+   private static final int MOVABLE_MASK = 2;
 
    ScreenView mScreenView = null;
 
    private int mMaskId = NO_MASK;
+   private int mMaskType = NO_MASK;
+
    private Context mContext = null;
    private Sound mSound = null;
    ScreenManger mScreenManager = null;
@@ -54,7 +59,7 @@ public class MainPage extends Activity {
       mContext = this;
       mSound = new Sound(mContext);
       mScreenManager = new ScreenManger(mContext);
-      
+
    }
 
    private void findViews() {
@@ -77,65 +82,82 @@ public class MainPage extends Activity {
          });
       }
    }
-   
-   private void addMask(int x,int y){
-	   Mask mask = null;
-	   switch(mMaskId){
-	   case R.id.fruit_mask:
-		   mask = new FruitMask(mContext, x,y);
-		   mScreenManager.add(mask);
-		   break;
-	   case R.id.coin_mask:
-		   mask = new CoinMask(mContext, x,y);
-		   mSound.play(R.raw.coin1);
-		   mScreenManager.add(mask);
-		   break;
-	   case R.id.bug_mask:
-		   mask = new BugMask(mContext, x,y);
-		   mScreenManager.add(mask);
-		   break;
-	   case NO_MASK:
-		   Utils.log(TAG, "no mask selected");
-		   break;
-	   }
-   }
-   
-   @Override
-   public boolean onCreateOptionsMenu(Menu menu){
-	   MenuInflater inflater = getMenuInflater();
-	   inflater.inflate(R.menu.options, menu);
-	   return super.onCreateOptionsMenu(menu);
-   }
-   
-   @Override
-   public boolean onOptionsItemSelected(MenuItem item){
-	   super.onOptionsItemSelected(item);
-	   switch(item.getItemId()){
-	   case R.id.fruit_mask:
-		   mMaskId = R.id.fruit_mask;
-//		   mScreenManager.removeAll();
-		   break;
-	   case R.id.coin_mask:
-		   mMaskId = R.id.coin_mask;
-//		   mScreenManager.removeAll();
-		   break;
-	   case R.id.bug_mask:
-		   mMaskId = R.id.bug_mask;
-//		   mScreenManager.removeAll();
-		   break;
-	   }
-	   return true;
-   }
-   
-   @Override
-   protected void onResume(){
-	   super.onResume();
-   }
-   
-   @Override
-   protected void onPause(){
-	   super.onPause();
+
+   private boolean needClearScreen(int oldType, int newType) {
+      if (oldType == NO_MASK) {
+         return false;
+      } else if (oldType != newType) {
+         return true;
+      } else {
+         return false;
+      }
+
    }
 
-      
+   private void addMask(int x, int y) {
+      Mask mask = null;
+      switch (mMaskId) {
+      case R.id.fruit_mask:
+         mask = new FruitMask(mContext, x, y);
+         mScreenManager.addMask(mask);
+         break;
+      case R.id.coin_mask:
+         mask = new CoinMask(mContext, x, y);
+         mSound.play(R.raw.coin1);
+         mScreenManager.addMask(mask);
+         break;
+      case R.id.bug_mask:
+         mask = new BugMask(mContext, x, y);
+         mScreenManager.addMask(mask);
+         break;
+      case NO_MASK:
+         Utils.log(TAG, "no mask selected");
+         break;
+      }
+   }
+
+   @Override
+   public boolean onCreateOptionsMenu(Menu menu) {
+      MenuInflater inflater = getMenuInflater();
+      inflater.inflate(R.menu.options, menu);
+      return super.onCreateOptionsMenu(menu);
+   }
+
+   @Override
+   public boolean onOptionsItemSelected(MenuItem item) {
+      super.onOptionsItemSelected(item);
+      int oldType = mMaskType;
+      switch (item.getItemId()) {
+      case R.id.fruit_mask:
+         mMaskType = STATIC_MASK;
+         mMaskId = R.id.fruit_mask;
+         break;
+      case R.id.coin_mask:
+         mMaskType = STATIC_MASK;
+         mMaskId = R.id.coin_mask;
+         break;
+      case R.id.bug_mask:
+         mMaskType = MOVABLE_MASK;
+         mMaskId = R.id.bug_mask;
+         break;
+      }
+      if (needClearScreen(oldType, mMaskType)) {
+         if (mMaskType == STATIC_MASK)
+            mScreenManager.removeMovableMasks();
+         if (mMaskType == MOVABLE_MASK)
+            mScreenManager.removeStaticMasks();
+      }
+      return true;
+   }
+
+   @Override
+   protected void onResume() {
+      super.onResume();
+   }
+
+   @Override
+   protected void onPause() {
+      super.onPause();
+   }
+
 }
