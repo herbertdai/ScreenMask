@@ -46,11 +46,17 @@ public class BugMask extends MovableMask {
 		setRect();
 
 		int direction = Utils.DIRECTIONS[RNG.nextInt(Utils.DIRECTIONS.length)];
+		direction = Utils.NORTH; //TODO move north
 		setDirection(direction);
 		Utils.log(TAG, "mask direction:" + direction);
+		
 		int step = Utils.MOVE_STEPS[RNG.nextInt(Utils.MOVE_STEPS.length)];
-		Utils.log(TAG, "mask step:" + step);
 		setStep(step);
+		Utils.log(TAG, "mask step:" + step);
+		
+		long life = Utils.LIFES[RNG.nextInt(Utils.LIFES.length)];
+		setLife(life);
+		Utils.log(TAG, "mask life:"+life);
 
 		setClickable(false);
 		this.setBackgroundResource(R.anim.bug_anim);

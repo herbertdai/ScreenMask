@@ -9,6 +9,7 @@ public abstract class MovableMask extends Mask {
    private int mStep;
    protected int mDirection;
    private int mId;
+   private long mLife;
 
    public MovableMask(Context context) {
       super(context);
@@ -34,11 +35,19 @@ public abstract class MovableMask extends Mask {
    }
 
    public void setDirection(int direction) {
-      mDirection = direction;
+      this.mDirection = direction;
    }
 
    public int getDirection() {
-      return mDirection;
+      return this.mDirection;
+   }
+   
+   public void setLife(long life){
+      this.mLife = life;
+   }
+   
+   public long getLife(){
+      return this.mLife;
    }
 
 }

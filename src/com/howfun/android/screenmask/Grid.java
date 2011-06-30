@@ -1,12 +1,14 @@
 package com.howfun.android.screenmask;
 
+import com.howfun.android.screenmask.mask.MovableMask;
+
 import android.graphics.Point;
 
 public class Grid {
 	private int mRectW;
 	private int mRectH;
-	private int mXOffset;
-	private int mYOffset;
+	private final int mXOffset;
+	private final int mYOffset;
 	private int mXNum;
 	private int mYNum;
 	private int mXLen;
@@ -14,15 +16,22 @@ public class Grid {
 
 	private int[][] mGrid;
 
-	public Grid(int rectW, int rectH, int widthPixels, int heightPixels) {
+	public Grid(int rectW, int rectH) {
+	   int widthPixels = Utils.mWidthPixels;
+	   int heightPixels = Utils.mHeightPixels;
+	   
 		mRectW = rectW;
 		mRectH = rectH;
+		
 		mXNum = widthPixels / rectW;
 		mYNum = heightPixels / rectH;
-		mXOffset = widthPixels % rectW;
-		mYOffset = heightPixels % rectH;
+		
+		mXOffset = (widthPixels % rectW) / 2;
+		mYOffset = (heightPixels % rectH) / 2;
+		
 		mXLen = mXNum * rectW;
 		mYLen = mYNum * rectH;
+		
 		mGrid = new int[mXNum][mYNum];
 	}
 	
@@ -46,26 +55,29 @@ public class Grid {
 		return new Coordinate(gridX, gridY);
 	}
 
+	
+	public Point getCenter(Coordinate c){//c means which grid
+      int gridX = c.x;
+      int gridY = c.y;
+      int halfW = mRectW / 2;
+      int halfH = mRectH / 2;
+      int cX = gridX * mRectW + halfW + mXOffset;
+      int cY = gridY * mRectH + halfH + mYOffset;
+      return new Point(cX, cY);
+   }
+	
+	
 	public Point getCenter(Point p) {
 		Coordinate c = whichGrid(p);
 		int gridX = c.x;
 		int gridY = c.y;
 		int halfW = mRectW / 2;
 		int halfH = mRectH / 2;
-		int cX = gridX * mRectW + halfW;
-		int cY = gridY * mRectH + halfH;
+		int cX = gridX * mRectW + halfW + mXOffset;
+		int cY = gridY * mRectH + halfH + mYOffset;
 		return new Point(cX, cY);
 	}
 	
-	public Point getCenter(Coordinate c){
-		int gridX = c.x;
-		int gridY = c.y;
-		int halfW = mRectW / 2;
-		int halfH = mRectH / 2;
-		int cX = gridX * mRectW + halfW;
-		int cY = gridY * mRectH + halfH;
-		return new Point(cX, cY);
-	}
 	
 	public Point getNextCenter(int direction,Point center){
 		Coordinate c = whichGrid(center);
@@ -103,15 +115,37 @@ public class Grid {
 		}
 		return getCenter(new Coordinate(x, y));
 	}
+	public Point addMask(MovableMask mask){
+	   boolean exists = false;
+	   int x = mask.getCenterX();
+      int y = mask.getCenterY();
+      Coordinate c = whichGrid(new Point(x,y));
+      if(mGrid[c.x][c.y] == 0){
+         mGrid[c.x][c.y] = 1;
+      }else{
+         exists = true;
+      }
+      
+      Point p = null;
+      if(!exists){
+         p = getCenter(c);
+      }
+      return p;
+	}
+	public int getXOffset(){
+	   return mXOffset;
+	}
+	
+	public int getYOffset(){
+	   return mYOffset;
+	}
 	
 	/**
-     * Simple class containing two integer values 
-     * and a comparison function.
-     * 
+     * Simple class containing two integer values  
      */
     private static class Coordinate {
-        public int x;
-        public int y;
+        public int x;   //grid_x
+        public int y;   //grid_y
 
         public Coordinate(int newX, int newY) {
             x = newX;

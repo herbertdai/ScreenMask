@@ -4,13 +4,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 
-public class Utils {
+public final class Utils {
+   public static int mWidthPixels;
+   public static int mHeightPixels;
 
    public static final int NORTH = 0;
    public static final int SOUTH = 1;
    public static final int WEST = 2;
    public static final int EAST = 3;
    public static final int[] DIRECTIONS = { NORTH, SOUTH, WEST, EAST };
+   public static final long[]LIFES = {10000L};
 
    public static final int[] MOVE_STEPS = {5,10,15};
 

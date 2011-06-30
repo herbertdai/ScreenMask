@@ -13,6 +13,7 @@ import com.howfun.android.screenmask.mask.Mask;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,10 +31,13 @@ public class MainPage extends Activity {
 	private static final int STATIC_MASK = 1;
 	private static final int MOVABLE_MASK = 2;
 
-	ScreenView mScreenView = null;
 
 	private int mMaskId = NO_MASK;
 	private int mMaskType = NO_MASK;
+	
+	DisplayMetrics dm;
+	
+	ScreenView mScreenView = null;
 
 	private Context mContext = null;
 	private Sound mSound = null;
@@ -52,6 +56,11 @@ public class MainPage extends Activity {
 	}
 
 	private void init() {
+	   dm = new DisplayMetrics();
+      getWindowManager().getDefaultDisplay().getMetrics(dm);
+      Utils.mWidthPixels = dm.widthPixels;
+      Utils.mHeightPixels = dm.heightPixels;
+      
 		mContext = this;
 		mSound = new Sound(mContext);
 		mScreenManager = new ScreenManger(mContext);
