@@ -15,7 +15,8 @@ public class FruitMask extends StaticMask {
    public static final int RECT_HEIGHT = 100;
 
    private int mFruitIds[] = { R.drawable.orange_slice, R.drawable.apple,
-         R.drawable.strawberry, R.drawable.watermelon_slice };
+         R.drawable.strawberry, R.drawable.watermelon_slice, R.drawable.kiwi,
+         R.drawable.lemon, R.drawable.hami_melon, R.drawable.cherry };
 
    public FruitMask(Context context, int x, int y) {
       super(context);
