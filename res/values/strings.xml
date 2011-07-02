@@ -8,6 +8,6 @@
     <string name="bug_mask">Bugs</string>
     <string name="heart_mask">Hearts</string>
     
-    <string name="help">Welcome to Screen Mask! Open menu to play more!</string>
+    <string name="help">Welcome to Screen Mask! Open menu to play!</string>
     <string name="exit">Exit</string>
 </resources>
