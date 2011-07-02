@@ -19,8 +19,19 @@ public class Sound {
       mPlayer = MediaPlayer.create(mContext, res);
       mPlayer.setLooping(false);
       mPlayer.start();
+      mPlayer.setOnCompletionListener(mCompletionListener);
    }
 
+   private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+      
+      @Override
+      public void onCompletion(MediaPlayer mp) {
+         Utils.log(TAG, "onCompletion");
+         mp.release();
+      }
+   };
+      
+   
    public void stop() {
       if (mPlayer != null) {
          mPlayer.stop();
