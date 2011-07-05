@@ -4,5 +4,6 @@
 	<item android:drawable="@drawable/bug0" android:duration="100" />
 	<item android:drawable="@drawable/bug1" android:duration="100" />
 	<item android:drawable="@drawable/bug2" android:duration="100" />
+	<item android:drawable="@drawable/bug3" android:duration="100" />
 </animation-list>
 
