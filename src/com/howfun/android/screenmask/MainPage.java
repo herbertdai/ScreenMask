@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 public class MainPage extends Activity {
    /** Called when the activity is first created. */
@@ -32,9 +33,9 @@ public class MainPage extends Activity {
    private static final int STATIC_MASK = 1;
    private static final int MOVABLE_MASK = 2;
 
-   private int mMaskId = NO_MASK;
-   private int mMaskType = NO_MASK;
-
+   private int mMaskId = R.id.fruit_mask;
+   private int mMaskType = STATIC_MASK;
+   
    DisplayMetrics dm;
 
    ScreenView mScreenView = null;
@@ -152,6 +153,15 @@ public class MainPage extends Activity {
       case R.id.heart_mask:
          mMaskType = STATIC_MASK;
          mMaskId = R.id.heart_mask;
+         break;
+      case R.id.clear:
+         mScreenManager.removeMovableMasks();
+         mScreenManager.removeStaticMasks();
+         break;
+      case R.id.exit:
+         showExitPrompt();
+         this.finish();
+         break;
       }
       if (needClearScreen(oldType, mMaskType)) {
          if (mMaskType == STATIC_MASK) {
@@ -165,14 +175,27 @@ public class MainPage extends Activity {
       return true;
    }
 
+   private void showExitPrompt() {
+      Toast.makeText(this, R.string.exit_prompt, Toast.LENGTH_LONG).show();
+   }
+   
+   private void showResumePrompt() {
+      Toast.makeText(this, R.string.resume_prompt, Toast.LENGTH_LONG).show();
+   }
+   
    @Override
    protected void onResume() {
       super.onResume();
+      
+      showResumePrompt();
    }
 
    @Override
    protected void onPause() {
       super.onPause();
+      
+      showExitPrompt();
+      
       if (mScreenManager != null) {
          // TODO stop thread
       }

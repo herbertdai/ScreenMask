@@ -8,6 +8,9 @@
     <string name="bug_mask">Bugs</string>
     <string name="heart_mask">Hearts</string>
     
+    <string name="clear">Clear</string>
     <string name="help">Welcome to Screen Mask! Open menu to play!</string>
     <string name="exit">Exit</string>
+    <string name="exit_prompt">Screen Mask has been stopped.</string>
+    <string name="resume_prompt">Screen Mask started.</string>
 </resources>
