@@ -4,20 +4,13 @@ import android.content.Context;
 
 public abstract class MovableMask extends Mask {
 
-   public static int mNextId = 0;
 
    private int mStep;
    protected int mDirection;
-   private int mId;
    private long mLife;
 
    public MovableMask(Context context) {
       super(context);
-      mId = mNextId++;
-   }
-
-   public int getId() {
-      return mId;
    }
 
    public void setCenter(int x, int y) {

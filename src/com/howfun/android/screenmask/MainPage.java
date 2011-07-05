@@ -30,13 +30,9 @@ public class MainPage extends Activity {
    public static final String TAG = "MainPage";
 
    private static final int NO_MASK = -1;
-   private static final int STATIC_MASK = 1;
-   private static final int MOVABLE_MASK = 2;
 
    private int mMaskId = R.id.fruit_mask;
-   private int mMaskType = STATIC_MASK;
-   
-   DisplayMetrics dm;
+   private int mWhichMask = (int) (Math.random() * FruitMask.mFruitIds.length);
 
    ScreenView mScreenView = null;
 
@@ -57,14 +53,9 @@ public class MainPage extends Activity {
    }
 
    private void init() {
-      dm = new DisplayMetrics();
-      getWindowManager().getDefaultDisplay().getMetrics(dm);
-      Utils.mWidthPixels = dm.widthPixels;
-      Utils.mHeightPixels = dm.heightPixels;
-
       mContext = this;
       mSound = new Sound(mContext);
-      mScreenManager = new ScreenManger(mContext);
+      mScreenManager = new ScreenManger();
 
    }
 
@@ -89,22 +80,11 @@ public class MainPage extends Activity {
       }
    }
 
-   private boolean needClearScreen(int oldType, int newType) {
-      if (oldType == NO_MASK) {
-         return false;
-      } else if (oldType != newType) {
-         return true;
-      } else {
-         return false;
-      }
-
-   }
-
    private void addMask(int x, int y) {
       Mask mask = null;
       switch (mMaskId) {
       case R.id.fruit_mask:
-         mask = new FruitMask(mContext, x, y);
+         mask = new FruitMask(mContext, x, y, mWhichMask);
          mScreenManager.addMask(mask);
          break;
       case R.id.coin_mask:
@@ -136,22 +116,22 @@ public class MainPage extends Activity {
    @Override
    public boolean onOptionsItemSelected(MenuItem item) {
       super.onOptionsItemSelected(item);
-      int oldType = mMaskType;
       switch (item.getItemId()) {
       case R.id.fruit_mask:
-         mMaskType = STATIC_MASK;
+         mScreenManager.clear();
          mMaskId = R.id.fruit_mask;
+         mWhichMask = (int) (Math.random() * FruitMask.mFruitIds.length);
          break;
       case R.id.coin_mask:
-         mMaskType = STATIC_MASK;
+         mScreenManager.clear();
          mMaskId = R.id.coin_mask;
          break;
       case R.id.bug_mask:
-         mMaskType = MOVABLE_MASK;
+         mScreenManager.clear();
          mMaskId = R.id.bug_mask;
          break;
       case R.id.heart_mask:
-         mMaskType = STATIC_MASK;
+         mScreenManager.clear();
          mMaskId = R.id.heart_mask;
          break;
       case R.id.clear:
@@ -163,39 +143,30 @@ public class MainPage extends Activity {
          this.finish();
          break;
       }
-      if (needClearScreen(oldType, mMaskType)) {
-         if (mMaskType == STATIC_MASK) {
-            mScreenManager.removeMovableMasks();
-         }
-
-         if (mMaskType == MOVABLE_MASK) {
-            mScreenManager.removeStaticMasks();
-         }
-      }
       return true;
    }
 
    private void showExitPrompt() {
       Toast.makeText(this, R.string.exit_prompt, Toast.LENGTH_LONG).show();
    }
-   
+
    private void showResumePrompt() {
       Toast.makeText(this, R.string.resume_prompt, Toast.LENGTH_LONG).show();
    }
-   
+
    @Override
    protected void onResume() {
       super.onResume();
-      
+
       showResumePrompt();
    }
 
    @Override
    protected void onPause() {
       super.onPause();
-      
+
       showExitPrompt();
-      
+
       if (mScreenManager != null) {
          // TODO stop thread
       }

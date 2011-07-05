@@ -14,12 +14,16 @@ public class FruitMask extends StaticMask {
    public static final int RECT_WIDTH = 100;
    public static final int RECT_HEIGHT = 100;
 
-   private int mFruitIds[] = { R.drawable.orange_slice, R.drawable.apple,
-         R.drawable.strawberry, R.drawable.watermelon_slice, R.drawable.kiwi,
-         R.drawable.lemon, R.drawable.hami_melon, R.drawable.cherry };
+   public static final int mFruitIds[] = { R.drawable.orange_slice,
+         R.drawable.apple, R.drawable.strawberry, R.drawable.watermelon_slice,
+         R.drawable.kiwi, R.drawable.lemon, R.drawable.hami_melon,
+         R.drawable.cherry };
 
-   public FruitMask(Context context, int x, int y) {
+   private int mWhichFruit;
+
+   public FruitMask(Context context, int x, int y, int whichFruit) {
       super(context);
+      mWhichFruit = whichFruit;
       init(x, y);
    }
 
@@ -30,7 +34,7 @@ public class FruitMask extends StaticMask {
       mRectHeight = RECT_HEIGHT;
       setRect();
       setClickable(false);
-      int random = (int) (Math.random() * mFruitIds.length);
-      setBackgroundResource(mFruitIds[random]);
+      // int random = (int) (Math.random() * mFruitIds.length);
+      setBackgroundResource(mFruitIds[mWhichFruit]);
    }
 }

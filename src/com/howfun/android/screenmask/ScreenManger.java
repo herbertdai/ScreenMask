@@ -1,6 +1,5 @@
 package com.howfun.android.screenmask;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,8 +8,6 @@ import com.howfun.android.screenmask.mask.Mask;
 import com.howfun.android.screenmask.mask.MovableMask;
 import com.howfun.android.screenmask.mask.StaticMask;
 
-import android.content.Context;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
@@ -26,17 +23,16 @@ public class ScreenManger {
    public static final long DELAY_MILLIS = 200L;
 
    public static final int MAX_MOVABLE_MASKS = 20;
+   public static final int MAX_STATIC_MASKS = 50;
 
    public static final int MSG_UPDATE_SCREEN = 1;
    public static final int MSG_KILL_MASK = 2;
 
-   private Context mContext;
-
    private ScreenView mScreenView;
 
    private int mMaskType = NO_MASK;
-   private ArrayList<StaticMask> mStaticMasks;
-   private Queue<MovableMask> mMaskQueue;
+   private Queue<StaticMask> mStaticMaskQueue;
+   private Queue<MovableMask> mMovableMaskQueue;
 
    private Handler mHandler = new Handler() {
 
@@ -47,8 +43,8 @@ public class ScreenManger {
             break;
          case MSG_KILL_MASK:
             MovableMask mask = (MovableMask) msg.obj;
-            if (mMaskQueue.contains(mask)) {
-               mMaskQueue.remove(mask);
+            if (mMovableMaskQueue.contains(mask)) {
+               mMovableMaskQueue.remove(mask);
             }
             break;
          }
@@ -68,10 +64,9 @@ public class ScreenManger {
       }
    };
 
-   public ScreenManger(Context context) {
-      mContext = context;
-      mStaticMasks = new ArrayList<StaticMask>();
-      mMaskQueue = new LinkedList<MovableMask>();
+   public ScreenManger() {
+      mStaticMaskQueue = new LinkedList<StaticMask>();
+      mMovableMaskQueue = new LinkedList<MovableMask>();
 
       mThread.start();
    }
@@ -105,9 +100,14 @@ public class ScreenManger {
          Utils.log(TAG, "mask is null,return");
          return false;
       }
+
+      if (mStaticMaskQueue.size() == MAX_STATIC_MASKS) {
+         StaticMask removeMask = mStaticMaskQueue.remove();
+         mScreenView.removeView(removeMask);
+      }
       // TODO add a mask
       Utils.log(TAG, "add a static mask");
-      mStaticMasks.add(mask);
+      mStaticMaskQueue.add(mask);
       mScreenView.addView(mask);
       Rect rect = mask.getRect();
       mask.layout(rect.left, rect.top, rect.right, rect.bottom);
@@ -119,12 +119,13 @@ public class ScreenManger {
          Utils.log(TAG, "mask is null,return");
          return false;
       }
-      if (mMaskQueue.size() == MAX_MOVABLE_MASKS) {
-         mMaskQueue.remove();
+
+      if (mMovableMaskQueue.size() == MAX_MOVABLE_MASKS) {
+         mMovableMaskQueue.remove();
       }
 
       Utils.log(TAG, "add a movable mask");
-      mMaskQueue.add(mask);
+      mMovableMaskQueue.add(mask);
       mScreenView.addView(mask);
       // TODO
       Message msg = new Message();
@@ -136,25 +137,26 @@ public class ScreenManger {
       return true;
    }
 
-   public void remove(int maskId) {
-
-   }
-
    public void removeStaticMasks() {
       mScreenView.removeAllViews();
-      mStaticMasks.clear();
+      mStaticMaskQueue.clear();
    }
 
    public void removeMovableMasks() {
       mScreenView.removeAllViews();
-      mMaskQueue.clear();
+      mMovableMaskQueue.clear();
+   }
+
+   public void clear() {
+      removeStaticMasks();
+      removeMovableMasks();
    }
 
    public void setNextPosition() {
-      if (mMaskQueue.size() == 0)
+      if (mMovableMaskQueue.size() == 0)
          return;
 
-      Iterator<MovableMask> it = mMaskQueue.iterator();
+      Iterator<MovableMask> it = mMovableMaskQueue.iterator();
       while (it.hasNext()) {
          MovableMask mask = it.next();
          int x = mask.getCenterX();
@@ -187,7 +189,7 @@ public class ScreenManger {
    }
 
    public void renderScreen() {
-      if (mMaskQueue.size() == 0) {
+      if (mMovableMaskQueue.size() == 0) {
          if (mMaskType == MOVABLE_MASK) {
             mScreenView.removeAllViews();
          }
@@ -195,7 +197,7 @@ public class ScreenManger {
       }
 
       mScreenView.removeAllViews();
-      Iterator<MovableMask> it = mMaskQueue.iterator();
+      Iterator<MovableMask> it = mMovableMaskQueue.iterator();
       while (it.hasNext()) {
          MovableMask mask = it.next();
          Rect rect = mask.getRect();
