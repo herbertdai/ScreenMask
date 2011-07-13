@@ -5,6 +5,8 @@
  */
 package com.howfun.android.screenmask;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.howfun.android.screenmask.mask.BugMask;
 import com.howfun.android.screenmask.mask.FruitMask;
 import com.howfun.android.screenmask.mask.CoinMask;
@@ -13,6 +15,7 @@ import com.howfun.android.screenmask.mask.Mask;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -39,6 +42,8 @@ public class MainPage extends Activity {
    private Context mContext = null;
    private Sound mSound = null;
    ScreenManger mScreenManager = null;
+   
+   private static final int REFRESH_INTERVAL = 120;
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class MainPage extends Activity {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.main);
       init();
+      
+      admob();
+      
       findViews();
       setupListeners();
       mScreenManager.setScreenView(mScreenView);
@@ -59,6 +67,12 @@ public class MainPage extends Activity {
 
    }
 
+   private void admob() {
+      Utils.log(TAG, "Add admob");
+      AdView adView = (AdView)this.findViewById(R.id.adView);
+      adView.loadAd(new AdRequest());
+
+   }
    private void findViews() {
       mScreenView = (ScreenView) findViewById(R.id.screen_view);
    }
