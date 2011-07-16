@@ -10,6 +10,7 @@ import com.howfun.android.screenmask.mask.FruitMask;
 import com.howfun.android.screenmask.mask.CoinMask;
 import com.howfun.android.screenmask.mask.HeartMask;
 import com.howfun.android.screenmask.mask.Mask;
+import com.sosceo.android.ads.AdView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -63,9 +64,15 @@ public class MainPage extends Activity {
       mContext = this;
       mSound = new Sound(mContext);
       mScreenManager = new ScreenManger();
-
+      
+      sosceo();
    }
 
+   private void sosceo() {
+      AdView mAdView = (AdView) findViewById(R.id.ad);
+      mAdView.showAgreement();
+ 
+   }
    private void findViews() {
       mScreenView = (ScreenView) findViewById(R.id.screen_view);
    }

@@ -7,14 +7,15 @@
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
 		<activity android:name=".MainPage" android:label="@string/app_name"
-			android:theme="@style/BgTransparent">
+			android:theme="@style/BgTransparent" android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<meta-data android:value="43996a792a0344da91189703f057a8e2" android:name="Wooboo_PID" />
-		<meta-data android:value="1" android:name="Market_ID" />
+<!--		<meta-data android:value="43996a792a0344da91189703f057a8e2" android:name="Wooboo_PID" />-->
+<!--		<meta-data android:value="1" android:name="Market_ID" />-->
+		<meta-data android:value="zerh6ze4" android:name="com.sosceo.android.ads.SOSCEO_APP_ID" />
 	</application>
 	<uses-sdk android:minSdkVersion="7" />
 

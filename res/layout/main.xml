@@ -7,10 +7,20 @@
 	<com.howfun.android.screenmask.ScreenView
 		android:id="@+id/screen_view" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" />
-		
-	<com.wooboo.adlib_android.WoobooAdView
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		adsdk:testing="false" adsdk:backgroundColor="#00000000"
-		adsdk:textColor="#FFFFFFFF" adsdk:refreshInterval="60"
-		/>
+
+	<!--	<com.wooboo.adlib_android.WoobooAdView-->
+	<!--
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	-->
+	<!--		adsdk:testing="false" adsdk:backgroundColor="#00000000"-->
+	<!--		adsdk:textColor="#FFFFFFFF" adsdk:refreshInterval="60"-->
+	<!--		/>-->
+	
+	<com.sosceo.android.ads.AdView
+		android:id="@+id/ad" android:layout_width="fill_parent"
+		android:textColor="#FFFFFF" 
+		android:background="@android:color/transparent"
+		android:layout_height="50px" />
+
 </FrameLayout>
