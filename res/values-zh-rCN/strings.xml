@@ -10,6 +10,7 @@
     
     <string name="clear">清屏</string>
     <string name="help">欢迎给屏幕做面膜，点击开始玩吧！（打开菜单还有哦。。。）</string>
+    <string name="about">关于</string>
     <string name="exit">退出</string>
     <string name="exit_prompt">屏幕SPA已经退出</string>
     <string name="resume_prompt">屏幕SPA已经开始</string>

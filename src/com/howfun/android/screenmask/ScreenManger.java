@@ -23,7 +23,7 @@ public class ScreenManger {
    public static final long DELAY_MILLIS = 200L;
 
    public static final int MAX_MOVABLE_MASKS = 20;
-   public static final int MAX_STATIC_MASKS = 50;
+   public static final int MAX_STATIC_MASKS = 100;
 
    public static final int MSG_UPDATE_SCREEN = 1;
    public static final int MSG_KILL_MASK = 2;

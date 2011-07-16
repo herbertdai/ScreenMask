@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item android:id="@+id/fruit_mask" android:title="@string/fruit_mask" />
+	<item android:id="@+id/fruit_mask" 
+	   android:icon="@drawable/orange_icon"
+      android:title="@string/fruit_mask" />
 
-	<item android:id="@+id/coin_mask" android:title="@string/coin_mask" />
+	<item android:id="@+id/coin_mask"
+	   android:icon="@drawable/one_dollar_icon"
+      android:title="@string/coin_mask" />
 
-	<item android:id="@+id/bug_mask" android:title="@string/bug_mask" />
-	<item android:id="@+id/heart_mask" android:title="@string/heart_mask" />
-	<item android:id="@+id/clear" android:title="@string/clear" />
+	<item android:id="@+id/bug_mask" 
+      android:icon="@drawable/bug"
+		android:title="@string/bug_mask" />
+		
+	<item android:id="@+id/clear" 
+	   android:icon="@drawable/clear"
+		android:title="@string/clear" />
 
-	<item android:id="@+id/exit" android:title="@string/exit" />
+	<item android:id="@+id/about"
+	   android:icon="@drawable/about"
+      android:title="@string/about" />
+
+	<item android:id="@+id/exit" 
+	  android:icon="@drawable/exit"
+	  android:title="@string/exit" />
 
 </menu>

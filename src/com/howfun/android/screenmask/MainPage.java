@@ -5,8 +5,6 @@
  */
 package com.howfun.android.screenmask;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 import com.howfun.android.screenmask.mask.BugMask;
 import com.howfun.android.screenmask.mask.FruitMask;
 import com.howfun.android.screenmask.mask.CoinMask;
@@ -14,6 +12,7 @@ import com.howfun.android.screenmask.mask.HeartMask;
 import com.howfun.android.screenmask.mask.Mask;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -52,12 +51,12 @@ public class MainPage extends Activity {
       setContentView(R.layout.main);
       init();
       
-      admob();
-      
       findViews();
       setupListeners();
       mScreenManager.setScreenView(mScreenView);
       Utils.showMessageDlg(this, R.string.help);
+      
+      
    }
 
    private void init() {
@@ -67,12 +66,6 @@ public class MainPage extends Activity {
 
    }
 
-   private void admob() {
-      Utils.log(TAG, "Add admob");
-      AdView adView = (AdView)this.findViewById(R.id.adView);
-      adView.loadAd(new AdRequest());
-
-   }
    private void findViews() {
       mScreenView = (ScreenView) findViewById(R.id.screen_view);
    }
@@ -110,10 +103,10 @@ public class MainPage extends Activity {
          mask = new BugMask(mContext, x, y);
          mScreenManager.addMask(mask);
          break;
-      case R.id.heart_mask:
-         mask = new HeartMask(mContext, x, y);
-         mScreenManager.addMask(mask);
-         break;
+//      case R.id.heart_mask:
+//         mask = new HeartMask(mContext, x, y);
+//         mScreenManager.addMask(mask);
+//         break;
       case NO_MASK:
          Utils.log(TAG, "no mask selected");
          break;
@@ -144,10 +137,13 @@ public class MainPage extends Activity {
          mScreenManager.clear();
          mMaskId = R.id.bug_mask;
          break;
-      case R.id.heart_mask:
-         mScreenManager.clear();
-         mMaskId = R.id.heart_mask;
+      case R.id.about:
+         showAbout();
          break;
+//      case R.id.heart_mask:
+//         mScreenManager.clear();
+//         mMaskId = R.id.heart_mask;
+//         break;
       case R.id.clear:
          mScreenManager.removeMovableMasks();
          mScreenManager.removeStaticMasks();
@@ -158,6 +154,18 @@ public class MainPage extends Activity {
          break;
       }
       return true;
+   }
+   
+   private void showAbout() {
+      new AlertDialog.Builder(this)
+         .setIcon(R.drawable.icon)
+         .setTitle(R.string.app_name)
+         .setMessage(
+               getResources().getString(R.string.version)
+               + "\n" +
+               getResources().getString(R.string.howfun)
+               )
+         .show().setCanceledOnTouchOutside(true);
    }
 
    private void showExitPrompt() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello, How Fun buddies!</string>
+    <string name="howfun">HOWFUN Studio. 2011</string>
+    <string name="version">1.0.0</string>
     <string name="app_name">ScreenMask</string>
     <string name="fruit_mask">Fruits</string>
     
@@ -10,6 +11,7 @@
     
     <string name="clear">Clear</string>
     <string name="help">Welcome to Screen Mask, Click to play! (Find more in menu...)</string>
+    <string name="about">About</string>
     <string name="exit">Exit</string>
     <string name="exit_prompt">Screen Mask has been stopped.</string>
     <string name="resume_prompt">Screen Mask started.</string>
